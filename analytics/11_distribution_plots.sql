@@ -1,18 +1,21 @@
-месячный AOV
+-- месячный AOV
 
 WITH monthly AS (
     SELECT
         date_trunc('month', o.order_purchase_timestamp) AS month,
         SUM(p.payment_value) AS gmv,
         COUNT(o.order_id) AS orders_count,
-        SUM(p.payment_value) / COUNT(o.order_id) AS aov
+        -- перевод к numeric, чтобы не потерять дробную часть при делении
+        SUM(p.payment_value)::NUMERIC / COUNT(o.order_id) AS aov
     FROM orders o
     JOIN payments p ON o.order_id = p.order_id
     GROUP BY 1
 )
+SELECT * FROM monthly;
 
 
-скользящий AOV (3 месяца)
+
+-- скользящий AOV (3 месяца)
 
 SELECT
     month,

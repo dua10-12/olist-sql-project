@@ -1,5 +1,4 @@
 --поиск пропусков
-
 SELECT *
 FROM orders
 WHERE order_purchase_timestamp IS NULL;
@@ -24,3 +23,5 @@ SELECT o.order_id
 FROM orders o
 LEFT JOIN order_items oi ON o.order_id = oi.order_id
 WHERE oi.order_id IS NULL;
+
+
